@@ -6,7 +6,7 @@
 /*   By: da-lee <da-lee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 18:30:59 by da-lee            #+#    #+#             */
-/*   Updated: 2020/11/10 19:07:51 by da-lee           ###   ########.fr       */
+/*   Updated: 2020/11/17 19:16:45 by da-lee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,28 @@
 
 static int	ft_cnt_word(const char *s, char c)
 {
-	char	*tmp_str;
+	int		i;
 	int		cnt;
 
-	tmp_str = (char *)s;
 	cnt = 0;
-	if (*tmp_str != c)
+	i = 0;
+	if (!s[i])
+		return (0);
+	while (s[i] && s[i] == c)
+		i++;
+	while (s[i])
 	{
-		tmp_str++;
-		cnt++;
-	}
-	while (*tmp_str)
-	{
-		while (*tmp_str == c)
+		if (s[i] == c && s[i])
 		{
-			tmp_str++;
-			if (*tmp_str != c && *tmp_str)
-				cnt++;
+			cnt++;
+			while (s[i] == c && s[i])
+				i++;
+			continue;
 		}
-		tmp_str++;
+		i++;
 	}
+	if (s[i - 1] != c)
+		cnt++;
 	return (cnt);
 }
 
@@ -80,7 +82,7 @@ char		**ft_split(char const *s, char c)
 			s++;
 		if (*s != c && *s)
 		{
-			if (!(arr[i] = malloc(sizeof(char) * (ft_get_word_len(s, c)))))
+			if (!(arr[i] = malloc(sizeof(char) * (ft_get_word_len(s, c) + 1))))
 				return (ft_free_alloc(arr));
 			while (*s && *s != c)
 				arr[i][j++] = (char)*s++;
