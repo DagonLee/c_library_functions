@@ -1,1 +1,1 @@
-# remake c library funcitons
+# Project of Remaking c library funcitons
